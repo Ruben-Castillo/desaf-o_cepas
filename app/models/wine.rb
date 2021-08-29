@@ -13,4 +13,15 @@ class Wine < ApplicationRecord
         end
     end
 
+    def updateStrainPercent(strainPercents, wineId)
+
+        @wineStrains=WineStrain.where(wine_id: wineId).destroy_all
+       
+        strainPercents.each do |strainId,strainPercent|
+            unless strainPercent.empty?
+                self.wine_strains.create(strain_id: strainId, percentage: strainPercent)
+            end
+        end
+    end
+
 end

@@ -16,14 +16,16 @@
     <%= form.text_field :name %>
   </div>
 
-<h2>Cepas</h2>
+  <h2>Cepas</h2>
 
-<%= form.fields_for :strains do |f| %>
-  <% @strains.each do |s| %>
-      <%= f.label s.name %>
-      <%= f.number_field s.id %>
+  <%= form.fields_for :strains do |f| %>
+    <% @strains.each do |s| %>
+        <% if s.available? %>
+          <%= f.label s.name %>
+          <%= f.number_field s.id %>
+        <% end %>
     <% end %>  
-<% end %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

@@ -19,6 +19,7 @@ class WinesController < ApplicationController
 
   # GET /wines/1/edit
   def edit
+    @strains= Strain.all
   end
 
   # POST /wines or /wines.json
@@ -41,6 +42,7 @@ class WinesController < ApplicationController
   def update
     respond_to do |format|
       if @wine.update(wine_params)
+        @wine.updateStrainPercent(params[:wine][:strains],@wine.id)
         format.html { redirect_to @wine, notice: "Wine was successfully updated." }
         format.json { render :show, status: :ok, location: @wine }
       else
