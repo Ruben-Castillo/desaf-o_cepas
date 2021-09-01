@@ -5,21 +5,25 @@ class WinesController < ApplicationController
   def index
     @wines = Wine.all
     @strains= Strain.all
+  
   end
 
   # GET /wines/1 or /wines/1.json
   def show
+    @oenologists=Oenologist.all
   end
 
   # GET /wines/new
   def new
     @wine = Wine.new
-    @strains= Strain.all
+    @strains= Strain.all.order(:name, :desc)
+    @oenologists=Oenologist.all.order(:age,:asc)
   end
 
   # GET /wines/1/edit
   def edit
-    @strains= Strain.all
+    @strains= Strain.all.order(:name, :desc)
+    @oenologists=Oenologist.all.order(:age,:asc)
   end
 
   # POST /wines or /wines.json
@@ -29,7 +33,8 @@ class WinesController < ApplicationController
     respond_to do |format|
       if @wine.save
         @wine.addStrainPercent(params[:wine][:strains])
-        format.html { redirect_to @wine, notice: "Wine was successfully created." }
+        @wine.updateScores(params[:wine][:oenologists_scores], @wine.id)
+        format.html { redirect_to wines_path, notice: "Wine was successfully created." }
         format.json { render :show, status: :created, location: @wine }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +48,8 @@ class WinesController < ApplicationController
     respond_to do |format|
       if @wine.update(wine_params)
         @wine.updateStrainPercent(params[:wine][:strains],@wine.id)
-        format.html { redirect_to @wine, notice: "Wine was successfully updated." }
+        @wine.updateScores(params[:wine][:oenologists_scores], @wine.id)
+        format.html { redirect_to wines_path, notice: "Wine was successfully updated." }
         format.json { render :show, status: :ok, location: @wine }
       else
         format.html { render :edit, status: :unprocessable_entity }

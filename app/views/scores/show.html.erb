@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Score:</strong>
+  <%= @score.score %>
+</p>
+
+<p>
+  <strong>Oenologist:</strong>
+  <%= @score.oenologist %>
+</p>
+
+<p>
+  <strong>Wine:</strong>
+  <%= @score.wine %>
+</p>
+
+<%= link_to 'Edit', edit_score_path(@score) %> |
+<%= link_to 'Back', scores_path %>

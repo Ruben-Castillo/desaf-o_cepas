@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-
-    <%= form.label :available %>
-    <%=form.check_box :available%>
-
+    <%= form.label :Nombre , class:"form-label"  %>
+    <%= form.text_field :name , class:"form-control"%>
+    <div class="mt-2">
+        <%= form.label :Disponible, class:"form-check-label" %>
+        <%=form.check_box :available, class:"form-check-input"%>
+    </div>
   </div>
 
 
 
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Guardar', class:"btn btn-dark" %>
   </div>
 <% end %>

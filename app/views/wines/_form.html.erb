@@ -10,24 +10,43 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="d-flex justify-content-end">
+    <%=  link_to 'Administrar Cepas', strains_path, class: "btn btn-light " %>
+  </div>
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.label :Nombre, class:"form-label" %>
+    <%= form.text_field :name,class:"form-control" %>
   </div>
 
-  <h2>Cepas</h2>
+  <h2 class="mt-5">Composición</h2>
 
-  <%= form.fields_for :strains do |f| %>
-    <% @strains.each do |s| %>
-        <% if s.available? %>
-          <%= f.label s.name %>
-          <%= f.number_field s.id %>
-        <% end %>
-    <% end %>  
-  <% end %>
+  <div class="field row">
+    <%= form.fields_for :strains do |f| %>
+      <% @strains.each do |s| %>
+          <% if s.available? %>
+            <div class="col-3 mb-2">
+              <%= f.label s.name, class:"form-label" %>
+              <%= f.number_field s.id, {class:"form-control", value: wine.GetStrainPercentage(s.id)} %>
+            </div>
+          <% end %>
+        
+      <% end %>  
+    <% end %>
+  </div>
+
+  <h2 class="mt-5">Puntuaciones</h2>
+
+  <div class="field row">
+    <%= form.fields_for :oenologists_scores do |f| %>
+      <% @oenologists.each do |o| %>
+              <strong><%= f.label o.name, class:" form-label mt-2" %></strong>
+              <%= f.number_field o.id, class:" form-control",value: wine.GetScore(o.id) %>
+      <% end %>  
+    <% end %>
+  </div>   
+          
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Guardar Vino', class: "btn btn-dark" %>
   </div>
 <% end %>

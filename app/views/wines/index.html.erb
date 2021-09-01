@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Wines</h1>
+<h1>Vinos</h1>
+<%= link_to 'Agregar Vino', new_wine_path %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Vino</th>
       <th>Composición</th>
+      <th>Puntuación</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,12 +16,14 @@
   <tbody>
     <% @wines.each do |wine| %>
       <tr>
+        <td><%= link_to wine.name, edit_wine_path(wine) %></td>
+        <td> 
+          <% wine.strains.order(:name).each do |s| %>
+            <%= "#{s.name}  (#{s.percentage(wine.id)}%)" %>
+          <% end %>
+        </td>
         <td><%= wine.name %></td>
-        <td><% wine.wine_strains.each do |ws| %>
-          <%= "#{ws.strain.name}  (#{ws.percentage}%)" %>
-        <% end %>
-      </td>
-        <td><%= link_to 'Show', wine %></td>
+        
         <td><%= link_to 'Edit', edit_wine_path(wine) %></td>
         <td><%= link_to 'Destroy', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -29,4 +33,4 @@
 
 <br>
 
-<%= link_to 'New Wine', new_wine_path %>
+

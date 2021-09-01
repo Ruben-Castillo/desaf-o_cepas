@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_30_124004) do
+ActiveRecord::Schema.define(version: 2021_08_31_224452) do
 
   create_table "job_titles", force: :cascade do |t|
     t.string "name"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2021_08_30_124004) do
     t.datetime "updated_at", null: false
     t.integer "age"
     t.string "nationality"
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer "score"
+    t.integer "oenologist_id"
+    t.integer "wine_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["oenologist_id"], name: "index_scores_on_oenologist_id"
+    t.index ["wine_id"], name: "index_scores_on_wine_id"
   end
 
   create_table "strains", force: :cascade do |t|

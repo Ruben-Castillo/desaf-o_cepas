@@ -1,9 +1,35 @@
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @wine.name %>
-</p>
+
+<h2> <%= @wine.name %> </h2> 
+
+<h5>Evaluaciones:</h5>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Enólogo</th>
+      <th scope="col">Puntuación</th>
+      <th colspan="2"></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <%  @oenologists.each do |o| %> 
+      <tr>
+        <td><%= o.name %></td>
+        <td><%= @wine.oenologistScore(o.id) %></td>
+        <% if @wine.oenologistScore(o.id)==nil %>
+        <td>Eliminar</td>
+      </tr>
+    <% end %>
+ 
+  </tbody>
+</table>
+
+
 
 <%= link_to 'Edit', edit_wine_path(@wine) %> |
 <%= link_to 'Back', wines_path %>
