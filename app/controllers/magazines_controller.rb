@@ -1,5 +1,6 @@
 class MagazinesController < ApplicationController
   before_action :set_magazine, only: %i[ show edit update destroy ]
+  before_action :authorize_admin!, except: %i[index]
 
   # GET /magazines or /magazines.json
   def index
@@ -13,6 +14,8 @@ class MagazinesController < ApplicationController
   # GET /magazines/new
   def new
     @magazine = Magazine.new
+    @oenologists=Oenologist.all
+    @jobtitles=JobTitle.all
   end
 
   # GET /magazines/1/edit
@@ -25,9 +28,11 @@ class MagazinesController < ApplicationController
   # POST /magazines or /magazines.json
   def create
     @magazine = Magazine.new(magazine_params)
+    
 
     respond_to do |format|
       if @magazine.save
+        @magazine.addOenologistsJobTitle(jobtitles_params)
         format.html { redirect_to @magazine, notice: "Magazine was successfully created." }
         format.json { render :show, status: :created, location: @magazine }
       else

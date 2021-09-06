@@ -11,20 +11,61 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  <div class="field">
-    <%= form.label :age %>
-    <%= form.number_field :age %>
-  </div>
-  <div class="field">
-    <%= form.label :nationality %>
-    <%= form.text_field :nationality %>
+  
+  <div class="row mt-5">
+    <div class="col-md">
+      <h4>Datos Personales</h4>
+      <div class="field">
+        <%= form.label :Nombre, class: "form-label" %>
+        <%= form.text_field :name,class: "form-control"  %>
+      </div>
+      <div class="field">
+        <%= form.label :Edad,class: "form-label" %>
+        <%= form.number_field :age,class: "form-control" %>
+      </div>
+      <div class="field">
+        <%= form.label :Nacionalidad,class: "form-label" %>
+        <%= form.text_field :nationality,class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-md">
+      <h4>Trabajos</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Revista</th>
+            <th>Escritor</th>
+            <th>Editor</th>
+            <th>Revisor</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @magazines.each do |m| %>
+            <tr>
+              <td><%= form.label m.name %></td>
+              <%=collection_check_boxes(:job_title_ids, m.id, @jobtitles, :id, :name,class:"form-check form-check-inline" ) do |b| %>
+                <td><%= b.check_box(class:"form-check-input", checked: m.isOenologistThisJobTitle?(oenologist.id,b.value)) %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+     
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Guardar Enólogo', class: "btn btn-dark" %>
   </div>
+
+
+
+
+
+
+
+
 <% end %>

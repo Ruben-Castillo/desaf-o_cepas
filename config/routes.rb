@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :scores
+  resources :scores, only: [:create, :edit]
   resources :oenologists
   resources :job_titles
   resources :magazines

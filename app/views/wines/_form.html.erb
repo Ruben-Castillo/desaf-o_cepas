@@ -12,6 +12,7 @@
   <% end %>
   <div class="d-flex justify-content-end">
     <%=  link_to 'Administrar Cepas', strains_path, class: "btn btn-light " %>
+    <%= link_to 'Eliminar', @wine, method: :delete, class: "btn btn-warning ", data: {confirm: '¿Seguro que deseas eliminar este vinito?' } %>
   </div>
   <div class="field">
     <%= form.label :Nombre, class:"form-label" %>

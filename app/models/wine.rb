@@ -1,7 +1,7 @@
 class Wine < ApplicationRecord
-    has_many :wine_strains
+    has_many :wine_strains, dependent: :destroy
     has_many :strains, through: :wine_strains
-    has_many :scores
+    has_many :scores, dependent: :destroy
     has_many :oenologists, through: :scores
 
     def addStrainPercent(strainPercents)
@@ -57,6 +57,12 @@ class Wine < ApplicationRecord
             score="Sin calificación"
         end
         return score.score
+    end
+
+    def averageScore
+        wineScores=Score.where(wine_id: self.id).pluck(:score)
+        average=wineScores.inject{|sum,ws| sum+ws}.to_f / wineScores.count
+        
     end
 
 end

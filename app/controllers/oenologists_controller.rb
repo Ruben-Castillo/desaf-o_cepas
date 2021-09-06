@@ -1,9 +1,11 @@
 class OenologistsController < ApplicationController
   before_action :set_oenologist, only: %i[ show edit update destroy ]
+  before_action :authorize_admin!, except: %i[index]
 
   # GET /oenologists or /oenologists.json
   def index
     @oenologists = Oenologist.all
+   
   end
 
   # GET /oenologists/1 or /oenologists/1.json
@@ -13,18 +15,24 @@ class OenologistsController < ApplicationController
   # GET /oenologists/new
   def new
     @oenologist = Oenologist.new
+    @magazines=Magazine.all
+    @jobtitles=JobTitle.all
   end
 
   # GET /oenologists/1/edit
   def edit
+    @magazines=Magazine.all
+    @jobtitles=JobTitle.all
   end
 
   # POST /oenologists or /oenologists.json
   def create
     @oenologist = Oenologist.new(oenologist_params)
+    
 
     respond_to do |format|
       if @oenologist.save
+        @oenologist.addMagazinesJobTitle(jobtitles_params)
         format.html { redirect_to @oenologist, notice: "Oenologist was successfully created." }
         format.json { render :show, status: :created, location: @oenologist }
       else
@@ -37,6 +45,7 @@ class OenologistsController < ApplicationController
   # PATCH/PUT /oenologists/1 or /oenologists/1.json
   def update
     respond_to do |format|
+      @oenologist.addMagazinesJobTitle(jobtitles_params)
       if @oenologist.update(oenologist_params)
         format.html { redirect_to @oenologist, notice: "Oenologist was successfully updated." }
         format.json { render :show, status: :ok, location: @oenologist }
@@ -65,5 +74,8 @@ class OenologistsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def oenologist_params
       params.require(:oenologist).permit(:name, :age, :nationality)
+    end
+    def jobtitles_params
+      params.require(:job_title_ids).permit!
     end
 end

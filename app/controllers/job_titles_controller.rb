@@ -1,5 +1,6 @@
 class JobTitlesController < ApplicationController
   before_action :set_job_title, only: %i[ show edit update destroy ]
+  before_action :authorize_admin!, except: %i[index]
 
   # GET /job_titles or /job_titles.json
   def index

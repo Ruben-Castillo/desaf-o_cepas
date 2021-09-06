@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Vinos</h1>
+<h1>Vinitos</h1>
 <%= link_to 'Agregar Vino', new_wine_path %>
 
 <table class="table">
@@ -22,10 +22,7 @@
             <%= "#{s.name}  (#{s.percentage(wine.id)}%)" %>
           <% end %>
         </td>
-        <td><%= wine.name %></td>
-        
-        <td><%= link_to 'Edit', edit_wine_path(wine) %></td>
-        <td><%= link_to 'Destroy', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= wine.averageScore %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,11 +1,18 @@
 class Magazine < ApplicationRecord
-    has_many :magazineoenologistjobtitles
+    has_many :magazineoenologistjobtitles, dependent: :destroy
     has_many :job_titles, through: :magazineoenologistjobtitles
     has_many :oenologists, through: :magazineoenologistjobtitles
 
     def isOenologistThisJobTitle?(o_id,job_id)
         magazineoenologistjobtitles = Magazineoenologistjobtitle.where(magazine_id: self.id, oenologist_id: o_id, job_title_id:job_id)
         magazineoenologistjobtitles.count>0
+    end
+
+    def findOenologistJobTitles(o_id)
+        jobs=Magazineoenologistjobtitle.where(magazine_id:self.id, oenologist_id: o_id)
+        jobs=jobs.map {|j| j.job_title.name }
+        jobs=jobs.join(", ")
+        return jobs
     end
 
     def addOenologistsJobTitle(job_titles)
